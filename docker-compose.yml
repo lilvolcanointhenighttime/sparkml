@@ -10,7 +10,7 @@ services:
       - 9000:9000
     volumes:
       - hadoop_namenode:/hadoop/dfs/name
-      - ./kursovaya:/home/kursovaya
+      - ./data:/home/data
     environment:
       - CLUSTER_NAME=test
     env_file:
@@ -31,7 +31,7 @@ services:
     networks:
       - hadoop_network
     
-  jypiter:
+  jupyter:
     image: jupyter/pyspark-notebook
     container_name: pyspark_jypiter
     ports:
