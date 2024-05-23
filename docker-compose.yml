@@ -7,10 +7,9 @@ services:
     restart: always
     ports:
       - 9870:9870
-      - 9000:9000
     volumes:
       - hadoop_namenode:/hadoop/dfs/name
-      - ./data:/home/data
+      - .src/datasets:/home/datasets
     environment:
       - CLUSTER_NAME=test
     env_file:
@@ -33,15 +32,33 @@ services:
     
   jupyter:
     image: jupyter/pyspark-notebook
-    container_name: pyspark_jypiter
+    container_name: pyspark_jupyter
     ports:
       - 8888:8888
-    networks:
-      - hadoop_network
+      - 10000:10000
     environment:
       - JUPYTER_PASSWORD='password'
     volumes:
-      - ./main.ipynb:/home/jovyan/main.ipynb
+      - ./src/jupyter_notebooks/:/home/jovyan/jupyter_notebooks
+    networks:
+      - hadoop_network
+
+  tictactoe:
+    image: python:3.11.6
+    container_name: tictactoe
+    ports:
+      - 8889:8889
+      - 10001:10001
+      - 10002:10002
+      - 10003:10003
+    volumes:
+      - ./src/tictactoe/:/src/tictactoe/
+    command: pip install hdfs
+    command: tail -f /dev/null
+    networks:
+      - hadoop_network
+
+  
   
 volumes:
   hadoop_namenode:
