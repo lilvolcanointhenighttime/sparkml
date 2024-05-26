@@ -1,8 +1,11 @@
 ## Quick Start
 
-To deploy an example HDFS cluster, run:
+To up containers
 ```
 docker-compose up
+```
+To deploy an example HDFS cluster, run:
+```
 docker exec -it NAMENODE_CONTAINER_NAME bin/bash
 cd home
 hdfs dfs -put src/ /
